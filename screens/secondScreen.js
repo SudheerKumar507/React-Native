@@ -1,37 +1,43 @@
-import React from "react";
-import {Text, View, Button, Image } from "react-native";
-//import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default class secondScreen extends React.Component{
-    static navigationOptions = {
-        tabBarLabel: 'screen2',
-        // drawerIcon: ({tintColor}) =>{
-        //     return(
-        //     <MaterialIcons 
-        //     name = "change-history"
-        //     size={24}
-        //     style={{color: tintColor}}>
-        //     </MaterialIcons>
-        //     );
-        // }
-    }
-    render(){
-        return <View style={
-            {
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }
-        }>
-            <Text style={{fontSize: 30, color: 'green'}}>
-                Screen 2
-            </Text>
-            <Button 
-                    onPress={()=>this.props.navigation.navigate(DrawerOpen)}
-                     title="Open DrawNavigator" />
-               
-            
-            </View>
-          
-    }
+import React, { Component } from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+export default class secondScreen extends Component {
+  state = {
+    data: []
+  };
+
+  componentWillMount() {
+    this.fetchData();
+  }
+
+  fetchData = async () => {
+    const response = await fetch("https://randomuser.me/api?results=10");
+    const json = await response.json();
+    this.setState({ data: json.results });
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={this.state.data}
+          keyExtractor={(x, i) => i}
+          renderItem={({ item }) =>
+            <Text>
+              {`${item.name.first} ${item.name.last}`}
+            </Text>}
+        />
+      </View>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 15,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#F5FCFF"
+  }
+});

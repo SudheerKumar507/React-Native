@@ -1,8 +1,12 @@
 import React from "react";
-import {Text, View, Button, Image } from "react-native";
+import { Text, View, Button, Image, Alert } from "react-native";
 //import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default class firstScreen extends React.Component{
+export default class firstScreen extends React.Component {
+    _onPressButton() {
+        Alert.alert('You tapped the button!')
+    }
+
     static navigationOptions = {
         tabBarLabel: 'screen1',
         // drawerIcon: ({tintColor}) =>{
@@ -15,7 +19,7 @@ export default class firstScreen extends React.Component{
         //     );
         // }
     }
-    render(){
+    render() {
         return <View style={
             {
                 flex: 1,
@@ -23,15 +27,19 @@ export default class firstScreen extends React.Component{
                 alignItems: 'center'
             }
         }>
-            <Text style={{fontSize: 30, color: 'green'}}>
+            <Text style={{ fontSize: 30, color: 'green' }}>
                 Screen 1
             </Text>
-            <Button 
-                    onPress={()=>this.props.navigation.navigate(DrawerOpen)}
-                     title="Open DrawNavigator" />
-               
-            
-            </View>
-          
+
+
+            <Button
+                onPress={this._onPressButton}
+                title="Press Me"
+                color="#841584"
+            />
+
+
+        </View>
+
     }
 }
